@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCompanyCustomerDto } from './dto/create-company_customer.dto';
@@ -17,11 +17,18 @@ export class CompanyCustomersService {
   }
 
   findAll() {
-    return `This action returns all companyCustomers`;
+    return this.companyCustomerRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} companyCustomer`;
+  async findOne(id: number) {
+    const companyCustomer = await this.companyCustomerRepository.findOne({
+      where: { id },
+    });
+
+    if (!companyCustomer) {
+      throw new NotFoundException('La empresa cliente no existe');
+    }
+    return companyCustomer;
   }
 
   update(id: number, updateCompanyCustomerDto: UpdateCompanyCustomerDto) {

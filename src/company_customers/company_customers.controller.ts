@@ -10,6 +10,7 @@ import {
 import { CompanyCustomersService } from './company_customers.service';
 import { CreateCompanyCustomerDto } from './dto/create-company_customer.dto';
 import { UpdateCompanyCustomerDto } from './dto/update-company_customer.dto';
+import { IdValidationPipe } from 'src/pipes/id-validation/id-validation.pipe';
 
 @Controller('company-customers')
 export class CompanyCustomersController {
@@ -29,7 +30,10 @@ export class CompanyCustomersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(
+    @Param('id', IdValidationPipe)
+    id: string,
+  ) {
     return this.companyCustomersService.findOne(+id);
   }
 
