@@ -31,11 +31,18 @@ export class CompanyCustomersService {
     return companyCustomer;
   }
 
-  update(id: number, updateCompanyCustomerDto: UpdateCompanyCustomerDto) {
-    return `This action updates a #${id} companyCustomer`;
+  async update(id: number, updateCompanyCustomerDto: UpdateCompanyCustomerDto) {
+    const companyCustomer = await this.findOne(id);
+    companyCustomer.companyName = updateCompanyCustomerDto.companyName;
+    companyCustomer.rfc = updateCompanyCustomerDto.rfc;
+
+    return this.companyCustomerRepository.save(companyCustomer);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} companyCustomer`;
+  async remove(id: number) {
+    const companyCustomer = await this.findOne(id);
+
+    await this.companyCustomerRepository.remove(companyCustomer);
+    return `Empresa eliminada`;
   }
 }

@@ -39,14 +39,14 @@ export class CompanyCustomersController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', IdValidationPipe) id: string,
     @Body() updateCompanyCustomerDto: UpdateCompanyCustomerDto,
   ) {
     return this.companyCustomersService.update(+id, updateCompanyCustomerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', IdValidationPipe) id: string) {
     return this.companyCustomersService.remove(+id);
   }
 }
