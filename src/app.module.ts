@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CompanyCustomersModule } from './company_customers/company_customers.module';
 import { typeOrmConfig } from './config/typeorm.config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { typeOrmConfig } from './config/typeorm.config';
       inject: [ConfigService],
     }),
     CompanyCustomersModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
