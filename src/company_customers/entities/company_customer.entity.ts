@@ -1,18 +1,24 @@
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class CompanyCustomer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 60 })
+  @Column({ type: 'varchar', length: 60, unique: true })
   companyName: string;
 
   @Column({ type: 'varchar', length: 13, unique: true })
   rfc: string;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
   @OneToMany(() => User, (user) => user.companyCustomer, { cascade: true })

@@ -1,5 +1,11 @@
 import { CompanyCustomer } from 'src/company_customers/entities/company_customer.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,7 +27,7 @@ export class User {
   @Column({ type: 'varchar', length: 50 })
   role: string;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
   @ManyToOne(() => CompanyCustomer)
