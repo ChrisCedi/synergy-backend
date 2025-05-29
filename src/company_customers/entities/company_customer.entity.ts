@@ -1,3 +1,4 @@
+import { Balance } from 'src/balances/entities/balance.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -23,4 +24,9 @@ export class CompanyCustomer {
 
   @OneToMany(() => User, (user) => user.companyCustomer, { cascade: true })
   users: User[];
+
+  @OneToMany(() => Balance, (balance) => balance.companyCustomer, {
+    cascade: true,
+  })
+  balances: Balance[];
 }
