@@ -17,7 +17,7 @@ export class BalancesService {
   }
 
   findAll() {
-    return `This action returns all balances`;
+    return this.balanceRepository.find();
   }
 
   async findOne(id: number) {
