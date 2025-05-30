@@ -35,7 +35,15 @@ export class BalancesService {
     return `This action updates a #${id} balance`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} balance`;
+  async remove(id: number) {
+    const balance = await this.findOne(id);
+
+    if (!balance) {
+      throw new NotFoundException(`Balance no encontrado con id ${id}`);
+    }
+
+    await this.balanceRepository.remove(balance);
+
+    return 'Balance eliminado exitosamente';
   }
 }
