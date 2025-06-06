@@ -6,6 +6,8 @@ import { AppService } from './app.service';
 import { CompanyCustomersModule } from './company_customers/company_customers.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { UsersModule } from './users/users.module';
+import { BalancesModule } from './balances/balances.module';
+import { AcquisitionsModule } from './acquisitions/acquisitions.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { UsersModule } from './users/users.module';
     }),
     CompanyCustomersModule,
     UsersModule,
+    BalancesModule,
+    AcquisitionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

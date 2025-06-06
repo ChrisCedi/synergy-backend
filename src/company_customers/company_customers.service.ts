@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCompanyCustomerDto } from './dto/create-company_customer.dto';
@@ -12,7 +16,19 @@ export class CompanyCustomersService {
     private readonly companyCustomerRepository: Repository<CompanyCustomer>,
   ) {}
 
-  create(createCompanyCustomerDto: CreateCompanyCustomerDto) {
+  async create(createCompanyCustomerDto: CreateCompanyCustomerDto) {
+    const companyCustomer = await this.companyCustomerRepository.findOne({
+      where: {
+        companyName: createCompanyCustomerDto.companyName,
+      },
+    });
+
+    if (companyCustomer) {
+      throw new BadRequestException({
+        status: 'error',
+        message: 'La compañia ya existe',
+      });
+    }
     return this.companyCustomerRepository.save(createCompanyCustomerDto);
   }
 
@@ -26,7 +42,10 @@ export class CompanyCustomersService {
     });
 
     if (!companyCustomer) {
-      throw new NotFoundException('La empresa cliente no existe');
+      throw new NotFoundException({
+        status: 'error',
+        message: 'La empresa cliente no existe',
+      });
     }
     return companyCustomer;
   }
