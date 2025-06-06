@@ -7,6 +7,7 @@ import { CompanyCustomersModule } from './company_customers/company_customers.mo
 import { typeOrmConfig } from './config/typeorm.config';
 import { UsersModule } from './users/users.module';
 import { BalancesModule } from './balances/balances.module';
+import { AcquisitionsModule } from './acquisitions/acquisitions.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BalancesModule } from './balances/balances.module';
     CompanyCustomersModule,
     UsersModule,
     BalancesModule,
+    AcquisitionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

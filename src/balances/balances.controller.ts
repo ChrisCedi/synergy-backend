@@ -32,12 +32,15 @@ export class BalancesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBalanceDto: UpdateBalanceDto) {
+  update(
+    @Param('id', IdValidationPipe) id: string,
+    @Body() updateBalanceDto: UpdateBalanceDto,
+  ) {
     return this.balancesService.update(+id, updateBalanceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', IdValidationPipe) id: string) {
     return this.balancesService.remove(+id);
   }
 }

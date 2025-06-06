@@ -5,7 +5,9 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
+import { Acquisition } from 'src/acquisitions/entities/acquisition.entity';
 
 @Entity()
 export class Balance {
@@ -23,4 +25,9 @@ export class Balance {
 
   @ManyToOne(() => CompanyCustomer)
   companyCustomer: CompanyCustomer;
+
+  @OneToMany(() => Acquisition, (acquisition) => acquisition.balance, {
+    cascade: true,
+  })
+  acquisitions: Acquisition[];
 }

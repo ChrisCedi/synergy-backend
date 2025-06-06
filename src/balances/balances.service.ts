@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBalanceDto } from './dto/create-balance.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,12 +16,27 @@ export class BalancesService {
     private readonly balanceRepository: Repository<Balance>,
   ) {}
 
-  create(createBalanceDto: CreateBalanceDto) {
+  async create(createBalanceDto: CreateBalanceDto) {
+    const balance = await this.balanceRepository.findOne({
+      where: { companyName: createBalanceDto.companyName },
+    });
+
+    if (balance) {
+      throw new BadRequestException('La empresa ya existe');
+    }
+
     return this.balanceRepository.save(createBalanceDto);
   }
 
-  findAll() {
-    return this.balanceRepository.find();
+  async findAll() {
+    const balances = await this.balanceRepository.find({
+      relations: ['acquisitions'],
+    });
+    return {
+      status: 'sucess',
+      messsge: 'Balances obtenidos con exito',
+      data: balances,
+    };
   }
 
   async findOne(id: number) {
@@ -31,8 +50,19 @@ export class BalancesService {
     return balance;
   }
 
-  update(id: number, updateBalanceDto: UpdateBalanceDto) {
-    return `This action updates a #${id} balance`;
+  async update(id: number, updateBalanceDto: UpdateBalanceDto) {
+    const balance = await this.findOne(id);
+
+    balance.companyName = updateBalanceDto.companyName;
+    balance.capital = updateBalanceDto.capital;
+
+    const balanceUpdate = await this.balanceRepository.save(balance);
+
+    return {
+      status: 'success',
+      message: 'Balance actualizado correctamente',
+      data: balanceUpdate,
+    };
   }
 
   async remove(id: number) {
@@ -44,6 +74,9 @@ export class BalancesService {
 
     await this.balanceRepository.remove(balance);
 
-    return 'Balance eliminado exitosamente';
+    return {
+      status: 'success',
+      message: 'Balance eliminado exitosamente',
+    };
   }
 }
