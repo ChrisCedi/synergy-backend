@@ -39,6 +39,7 @@ export class CompanyCustomersService {
   async findOne(id: number) {
     const companyCustomer = await this.companyCustomerRepository.findOne({
       where: { id },
+      relations: ['users'],
     });
 
     if (!companyCustomer) {

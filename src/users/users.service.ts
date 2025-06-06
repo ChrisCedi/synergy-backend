@@ -39,10 +39,7 @@ export class UsersService {
       throw new ConflictException(errors);
     }
 
-    return this.userRepository.save({
-      ...createUserDto,
-      companyCustomer,
-    });
+    return this.userRepository.save(createUserDto);
   }
 
   findAll() {
