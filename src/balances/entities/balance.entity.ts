@@ -26,6 +26,9 @@ export class Balance {
   @ManyToOne(() => CompanyCustomer)
   companyCustomer: CompanyCustomer;
 
+  @Column()
+  companyCustomerId: number;
+
   @OneToMany(() => Acquisition, (acquisition) => acquisition.balance, {
     cascade: true,
   })
