@@ -39,6 +39,18 @@ export class BalancesService {
     };
   }
 
+  async findByCompany(id: number) {
+    const balances = await this.balanceRepository.find({
+      where: { companyCustomerId: id },
+      relations: ['acquisitions'],
+    });
+    return {
+      status: 'sucess',
+      messsge: 'Balances obtenidos con exito',
+      data: balances,
+    };
+  }
+
   async findOne(id: number) {
     const balance = await this.balanceRepository.findOne({
       where: { id },

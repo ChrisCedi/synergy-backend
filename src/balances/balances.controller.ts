@@ -26,6 +26,11 @@ export class BalancesController {
     return this.balancesService.findAll();
   }
 
+  @Get('/findByCompany/:id')
+  findByCompany(@Param('id', IdValidationPipe) id: string) {
+    return this.balancesService.findByCompany(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id', IdValidationPipe) id: string) {
     return this.balancesService.findOne(+id);

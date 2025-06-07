@@ -30,6 +30,9 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => CompanyCustomer)
+  @Column()
+  companyCustomerId: number;
+
+  @ManyToOne(() => CompanyCustomer, (companyCustomer) => companyCustomer.users)
   companyCustomer: CompanyCustomer;
 }

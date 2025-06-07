@@ -10,4 +10,7 @@ export class CreateBalanceDto {
   capital: number;
 
   createdAt: Date;
+
+  @IsNumber()
+  companyCustomerId: number;
 }
