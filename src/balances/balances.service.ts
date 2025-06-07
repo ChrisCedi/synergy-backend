@@ -25,7 +25,12 @@ export class BalancesService {
       throw new BadRequestException('La empresa ya existe');
     }
 
-    return this.balanceRepository.save(createBalanceDto);
+    const newBalance = await this.balanceRepository.save(createBalanceDto);
+
+    return {
+      status: 'success',
+      data: newBalance,
+    };
   }
 
   async findAll() {
