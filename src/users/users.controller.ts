@@ -31,11 +31,15 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  @Get('/byCompany/:companyCustomerId')
+  findByCompany(@Param('companyCustomerId') companyCustomerId: string) {
+    return this.usersService.findByCompany(+companyCustomerId);
+  }
+
   /*  @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   } */
-
   @Delete(':id')
   remove(@Param('id', IdValidationPipe) id: string) {
     return this.usersService.remove(+id);
