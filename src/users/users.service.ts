@@ -49,6 +49,12 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findByCompany(companyCustomerId: number) {
+    return await this.userRepository.find({
+      where: { companyCustomerId },
+    });
+  }
+
   async findOne(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
