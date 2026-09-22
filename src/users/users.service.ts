@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CompanyCustomer } from 'src/company_customers/entities/company_customer.entity';
+import { hashPassword } from 'utils/auth';
 
 @Injectable()
 export class UsersService {
@@ -39,6 +40,8 @@ export class UsersService {
       throw new ConflictException(errors);
     }
 
+    createUserDto.password = await hashPassword(createUserDto.password);
+
     return this.userRepository.save(createUserDto);
   }
 
@@ -58,9 +61,17 @@ export class UsersService {
     return user;
   }
 
-  /*   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  } */
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new NotFoundException('El usuario no existe');
+    }
+
+    return user;
+  }
 
   async remove(id: number) {
     const user = await this.findOne(id);

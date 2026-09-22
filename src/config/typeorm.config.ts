@@ -11,7 +11,9 @@ export const typeOrmConfig = (
   username: configService.get('PGUSER'),
   password: configService.get('PGPASSWORD'),
   database: configService.get('PGDATABASE'),
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false, // 👈 clave para desarrollo/pruebas
+  },
   logging: true,
   entities: [join(__dirname, '../**/*.entity.{js,ts}')],
   synchronize: true,

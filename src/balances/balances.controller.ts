@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { BalancesService } from './balances.service';
 import { CreateBalanceDto } from './dto/create-balance.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
 import { IdValidationPipe } from 'src/pipes/id-validation/id-validation.pipe';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('balances')
 export class BalancesController {
   constructor(private readonly balancesService: BalancesService) {}
@@ -20,7 +23,7 @@ export class BalancesController {
   create(@Body() createBalanceDto: CreateBalanceDto) {
     return this.balancesService.create(createBalanceDto);
   }
-
+  //@Public()
   @Get()
   findAll() {
     return this.balancesService.findAll();
